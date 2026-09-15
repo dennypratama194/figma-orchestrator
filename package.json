@@ -1,6 +1,6 @@
 {
   "name": "figma-orchestrator",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "A gated brief-to-Figma design orchestrator for Claude Code.",
@@ -12,5 +12,8 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "yaml": "^2.8.1"
   }
 }

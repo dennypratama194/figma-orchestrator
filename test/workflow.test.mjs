@@ -1,77 +1,24 @@
-import assert from "node:assert/strict";
-import fs from "node:fs";
-import os from "node:os";
-import path from "node:path";
-import test from "node:test";
-import { completeStage, createInitialState, decideGate, validateState } from "../scripts/lib/workflow.mjs";
-
-function artifact(directory, name) {
-  const file = path.join(directory, name);
-  fs.writeFileSync(file, "evidence\n");
-  return file;
+import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import test from 'node:test';
+import {createInitialState,completeStage,decideGate,reviewGate,validateState,invalidateFrom,writeState,readState,migrateState,STAGES,GATES} from '../scripts/lib/workflow.mjs';
+function setup(t){const dir=fs.mkdtempSync(path.join(os.tmpdir(),'figo-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));return {dir,s:createInitialState({name:'Test',workspace:dir})};}
+function evidence(dir,stage){
+ const text=`${stage}.md`,shot=`${stage}.png`,inspection=`${stage}-inspection.json`,tokens=`${stage}-tokens.json`;
+ fs.writeFileSync(path.join(dir,text),'Stage-specific deliverable');fs.writeFileSync(path.join(dir,shot),'Screenshot fixture');fs.writeFileSync(path.join(dir,inspection),'Recorded MCP fixture');fs.copyFileSync('templates/design-tokens.json',path.join(dir,tokens));
+ const e={stage,summary:'Test evidence',files:[text,shot,inspection,tokens],figmaUrl:'https://www.figma.com/design/test/Example',nodes:[{id:'1',type:'VARIABLE'},{id:'2',type:'COMPONENT'}],inspectedAt:new Date().toISOString(),inspectedBy:'builder',inspectionFile:inspection,tokenFile:tokens,screens:[{nodeId:'2',width:1440,screenshot:shot}],producedBy:'builder',review:{reviewer:'critic',verdict:'pass',findings:[]}};
+ const file=path.join(dir,stage+'.json');fs.writeFileSync(file,JSON.stringify(e));return file;
 }
-
-test("initial state is valid and starts at brief", () => {
-  const state = createInitialState({ name: "Test", workspace: "/tmp/test" });
-  assert.equal(state.currentStage, "brief");
-  assert.deepEqual(validateState(state), []);
-});
-
-test("stages cannot be skipped", () => {
-  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "figo-"));
-  const state = createInitialState({ name: "Test", workspace: directory });
-  assert.throws(() => completeStage(state, "strategy", artifact(directory, "strategy.md")), /prior stage brief/);
-});
-
-test("a gate requires its prior stage and a named human", () => {
-  const state = createInitialState({ name: "Test", workspace: "/tmp/test" });
-  assert.throws(() => decideGate(state, "structure", "approved", "Denny"), /content is incomplete/);
-});
-
-test("an agent cannot approve its own work", () => {
-  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "figo-"));
-  const state = createInitialState({ name: "Test", workspace: directory });
-  for (const stage of ["brief", "strategy", "ux", "content"]) {
-    completeStage(state, stage, artifact(directory, `${stage}.md`));
-  }
-  assert.throws(() => decideGate(state, "structure", "approved", "Claude"), /human decision maker/);
-});
-
-test("direction remains locked until structure approval", () => {
-  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "figo-"));
-  const state = createInitialState({ name: "Test", workspace: directory });
-  for (const stage of ["brief", "strategy", "ux", "content"]) {
-    completeStage(state, stage, artifact(directory, `${stage}.md`));
-  }
-  assert.throws(() => completeStage(state, "direction", artifact(directory, "direction.md")), /structure gate/);
-  decideGate(state, "structure", "approved", "Denny");
-  completeStage(state, "direction", artifact(directory, "direction.md"));
-  assert.equal(state.stages.direction.status, "complete");
-});
-
-test("design system is required before concept work", () => {
-  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "figo-"));
-  const state = createInitialState({ name: "Test", workspace: directory });
-  for (const stage of ["brief", "strategy", "ux", "content"]) {
-    completeStage(state, stage, artifact(directory, `${stage}.md`));
-  }
-  decideGate(state, "structure", "approved", "Denny");
-  completeStage(state, "direction", artifact(directory, "direction.md"));
-  decideGate(state, "direction", "approved", "Denny");
-  assert.throws(() => completeStage(state, "concept", artifact(directory, "concept.md")), /prior stage system/);
-  completeStage(state, "system", artifact(directory, "design-system.md"));
-  completeStage(state, "concept", artifact(directory, "concept.md"));
-  assert.equal(state.stages.concept.status, "complete");
-});
-
-test("rejection requires a reason and does not unlock work", () => {
-  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "figo-"));
-  const state = createInitialState({ name: "Test", workspace: directory });
-  for (const stage of ["brief", "strategy", "ux", "content"]) {
-    completeStage(state, stage, artifact(directory, `${stage}.md`));
-  }
-  assert.throws(() => decideGate(state, "structure", "rejected", "Denny"), /rejection reason/);
-  decideGate(state, "structure", "rejected", "Denny", "Simplify the flow");
-  assert.equal(state.gates.structure.status, "rejected");
-  assert.equal(state.currentStage, "content");
-});
+function decide(s,g,decision='approved'){return decideGate(s,g,decision,'Denny','Review feedback',{...reviewGate(s,g),statement:'Explicit user decision',source:'conversation:test-message'});}
+function advance(s,dir,last){for(const stage of STAGES){for(const [g,c] of Object.entries(GATES))if(c.unlocks===stage)decide(s,g);completeStage(s,stage,evidence(dir,stage));if(stage===last)break;}}
+test('full evidence-backed workflow completes',t=>{const {s,dir}=setup(t);advance(s,dir,'handoff');assert.equal(s.status,'complete');assert.deepEqual(validateState(s),[]);});
+test('empty file and skipped stages are rejected',t=>{const {s,dir}=setup(t);const f=path.join(dir,'empty');fs.writeFileSync(f,'');assert.throws(()=>completeStage(s,'brief',f));assert.throws(()=>completeStage(s,'strategy',evidence(dir,'strategy')));});
+test('revoked direction clears system and prevents concept',t=>{const {s,dir}=setup(t);advance(s,dir,'system');decide(s,'direction','rejected');assert.equal(s.stages.system.status,'pending');assert.throws(()=>completeStage(s,'concept',evidence(dir,'concept')));});
+test('revision invalidates all downstream approvals',t=>{const {s,dir}=setup(t);advance(s,dir,'handoff');invalidateFrom(s,'brief');assert.equal(s.gates.final.status,'pending');assert.equal(s.stages.handoff.status,'pending');assert.equal(s.status,'active');});
+test('external artifact edits invalidate completion and review',t=>{const {s,dir}=setup(t);advance(s,dir,'content');fs.appendFileSync(path.join(dir,'brief.md'),' changed');assert.ok(validateState(s).length);assert.throws(()=>reviewGate(s,'structure'));invalidateFrom(s,'brief');assert.deepEqual(validateState(s),[]);});
+test('name alone cannot record approval',t=>{const {s,dir}=setup(t);advance(s,dir,'content');assert.throws(()=>decideGate(s,'structure','approved','Denny'));});
+test('old fingerprint cannot approve revised deliverables',t=>{const {s,dir}=setup(t);advance(s,dir,'content');const old=reviewGate(s,'structure');invalidateFrom(s,'content');completeStage(s,'content',evidence(dir,'content'));s.stages.content.completedAt='2020-01-01';assert.throws(()=>decideGate(s,'structure','approved','Denny',null,{fingerprint:old.fingerprint,statement:'yes',source:'message'}));});
+test('invalid states fail validation',t=>{const {s}=setup(t);s.status='nonsense';s.stages.brief.status='garbage';assert.ok(validateState(s).length);});
+test('stale writer cannot overwrite decisions',t=>{const {s,dir}=setup(t);writeState(dir,s);const a=readState(dir),b=readState(dir);completeStage(a,'brief',evidence(dir,'brief'));writeState(dir,a);assert.throws(()=>writeState(dir,b),/revision conflict/);assert.equal(readState(dir).stages.brief.status,'complete');});
+test('migration preserves backup and invalidates legacy approvals',t=>{const {dir}=setup(t);fs.writeFileSync(path.join(dir,'state.json'),JSON.stringify({version:1,project:{name:'Old'},gates:{}}));const s=migrateState(dir);assert.deepEqual(validateState(s),[]);assert.ok(fs.existsSync(path.join(dir,'state.v1.backup.json')));});
+test('system requires valid token file and component evidence',t=>{const {s,dir}=setup(t);advance(s,dir,'direction');decide(s,'direction');const f=evidence(dir,'system');const e=JSON.parse(fs.readFileSync(f));e.nodes=[];fs.writeFileSync(f,JSON.stringify(e));assert.throws(()=>completeStage(s,'system',f));});
+test('concept approval required before desktop',t=>{const {s,dir}=setup(t);advance(s,dir,'concept');assert.throws(()=>completeStage(s,'desktop',evidence(dir,'desktop')),/concept/);});
+test('unresolved blocker prevents QA completion',t=>{const {s,dir}=setup(t);advance(s,dir,'responsive');const f=evidence(dir,'qa');const e=JSON.parse(fs.readFileSync(f));e.review.findings=[{severity:'blocker',resolved:false}];fs.writeFileSync(f,JSON.stringify(e));assert.throws(()=>completeStage(s,'qa',f));});

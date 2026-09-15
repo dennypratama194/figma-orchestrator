@@ -2,7 +2,7 @@
 
 A private Claude Code plugin that turns a raw website or product brief into an approved, responsive, implementation-ready native Figma design.
 
-It coordinates strategy, UX architecture, content, project-specific taste, visual direction, a native Figma design system, Figma production, independent critique, responsive design, optional purposeful shaders, and handoff QA. The workflow is intentionally gated: Claude can work autonomously between gates, but it cannot approve its own creative direction or final design.
+It coordinates strategy, UX architecture, content, project-specific taste, visual direction, a native Figma design system, Figma production, independent critique, responsive design, optional purposeful shaders, and handoff QA. The workflow is intentionally gated: Claude can work autonomously between gates, and records explicit user decisions before advancing past creative gates. These records are not independently authenticated.
 
 ## Requirements
 
@@ -55,17 +55,17 @@ You can also pass the brief and target directly:
 
 Spatial values use an even 2/4/8-derived scale. One-pixel hairline strokes are the only default odd-value exception. Decorative gradients and generic glow effects are prohibited. Figma shaders are supported only when the approved direction gives them a specific role, fallback, and implementation plan.
 
-Four gates require explicit human approval: structure, direction, desktop, and final.
+Five gates require explicit human approval: structure, direction, concept, desktop, and final.
 
 ## Deterministic workflow state
 
-The plugin stores state and artifacts in `.figma-orchestrator/` inside the client project. The state CLI prevents skipped stages and self-approval.
+The plugin stores state and artifacts in `.figma-orchestrator/` inside the client project. The state CLI validates evidence and binds recorded decisions to artifact revisions. It does not independently authenticate a human. See [workflow v2](docs/workflow-v2.md) for manifests, decision provenance, migration, and limitations.
 
 ```bash
 node /path/to/figma-orchestrator/scripts/orchestrator.mjs init --name "Client Website" --figma-url "https://www.figma.com/design/..."
 node /path/to/figma-orchestrator/scripts/orchestrator.mjs status
-node /path/to/figma-orchestrator/scripts/orchestrator.mjs complete --stage brief --artifact .figma-orchestrator/artifacts/brief.md
-node /path/to/figma-orchestrator/scripts/orchestrator.mjs approve --gate structure --by Denny
+node /path/to/figma-orchestrator/scripts/orchestrator.mjs complete --stage brief --artifact .figma-orchestrator/artifacts/brief.evidence.json
+node /path/to/figma-orchestrator/scripts/orchestrator.mjs review --gate structure
 node /path/to/figma-orchestrator/scripts/orchestrator.mjs validate
 ```
 
@@ -91,5 +91,6 @@ Set `FIGMA_ORCHESTRATOR_WORKSPACE` to use a different workflow directory.
 ## Development
 
 ```bash
+npm ci
 npm run check
 ```

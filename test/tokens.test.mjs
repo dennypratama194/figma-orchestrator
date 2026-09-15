@@ -22,3 +22,8 @@ test("odd spatial values fail validation", () => {
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /must be an even integer/);
 });
+
+import {validateTokens} from '../scripts/lib/tokens.mjs';
+for(const [name,mutate] of [
+ ['negative size',t=>t.sizes.bad=-40],['empty typography',t=>t.typography={}],['odd strokes',t=>t.strokes.bad=3],['fractional strokes',t=>t.strokes.bad=1.5],['unchecked geometry',t=>t.geometry={width:333}],['huge spacing',t=>t.spacing.bad=1000000]
+]) test(name+' is rejected',()=>{const t=JSON.parse(fs.readFileSync('templates/design-tokens.json'));mutate(t);assert.ok(validateTokens(t).length);});

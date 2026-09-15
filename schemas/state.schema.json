@@ -3,21 +3,330 @@
   "$id": "https://digitalrevo.id/schemas/figma-orchestrator/state.schema.json",
   "title": "Figma Orchestrator State",
   "type": "object",
-  "required": ["version", "project", "currentStage", "status", "stages", "gates", "history"],
+  "required": [
+    "version",
+    "project",
+    "currentStage",
+    "status",
+    "stages",
+    "gates",
+    "history",
+    "revision",
+    "createdAt",
+    "updatedAt"
+  ],
   "properties": {
-    "version": { "const": 1 },
+    "version": {
+      "const": 2
+    },
     "project": {
       "type": "object",
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "properties": {
-        "name": { "type": "string", "minLength": 1 },
-        "figmaUrl": { "type": ["string", "null"] }
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "figmaUrl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
       }
     },
-    "currentStage": { "type": "string" },
-    "status": { "enum": ["active", "blocked", "complete"] },
-    "stages": { "type": "object" },
-    "gates": { "type": "object" },
-    "history": { "type": "array" }
+    "currentStage": {
+      "enum": [
+        "brief",
+        "strategy",
+        "ux",
+        "content",
+        "direction",
+        "system",
+        "concept",
+        "desktop",
+        "responsive",
+        "qa",
+        "handoff",
+        "complete"
+      ]
+    },
+    "status": {
+      "enum": [
+        "active",
+        "blocked",
+        "complete"
+      ]
+    },
+    "stages": {
+      "type": "object",
+      "required": [
+        "brief",
+        "strategy",
+        "ux",
+        "content",
+        "direction",
+        "system",
+        "concept",
+        "desktop",
+        "responsive",
+        "qa",
+        "handoff"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "brief": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "complete"
+              ]
+            }
+          }
+        },
+        "strategy": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "complete"
+              ]
+            }
+          }
+        },
+        "ux": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "complete"
+              ]
+            }
+          }
+        },
+        "content": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "complete"
+              ]
+            }
+          }
+        },
+        "direction": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "complete"
+              ]
+            }
+          }
+        },
+        "system": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "complete"
+              ]
+            }
+          }
+        },
+        "concept": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "complete"
+              ]
+            }
+          }
+        },
+        "desktop": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "complete"
+              ]
+            }
+          }
+        },
+        "responsive": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "complete"
+              ]
+            }
+          }
+        },
+        "qa": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "complete"
+              ]
+            }
+          }
+        },
+        "handoff": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "complete"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "gates": {
+      "type": "object",
+      "required": [
+        "structure",
+        "direction",
+        "concept",
+        "desktop",
+        "final"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "structure": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "approved",
+                "rejected"
+              ]
+            }
+          }
+        },
+        "direction": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "approved",
+                "rejected"
+              ]
+            }
+          }
+        },
+        "concept": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "approved",
+                "rejected"
+              ]
+            }
+          }
+        },
+        "desktop": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "approved",
+                "rejected"
+              ]
+            }
+          }
+        },
+        "final": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "approved",
+                "rejected"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "history": {
+      "type": "array"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    }
   }
 }

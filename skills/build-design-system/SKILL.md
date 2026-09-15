@@ -17,9 +17,11 @@ Produce `.figma-orchestrator/artifacts/design-system.md` with links or node iden
 
 - Start the spatial system with 2, 4, and 8. Use the approved scale for gaps, padding, margins, insets, radii, control heights, icon boxes, and layout dimensions.
 - Do not introduce odd spatial or component-geometry values. A 1px hairline stroke is allowed because it is stroke thickness, not spatial rhythm.
-- Use even font sizes and line heights by default. Any font-metric exception must be explicit in `design-system.md`, never an accidental local value.
+- Use even font sizes and line heights by default. The numeric validator does not accept font-metric exceptions; request an explicit rule change if a project requires one.
 - Use variables or styles for recurring decisions. Do not scatter raw values through screens.
 - Create components for repeated UI and every interaction family requiring states. Prefer variants and properties over duplicated detached frames.
 - Keep the system project-specific. Do not manufacture components the approved screens do not need.
 
 Full concept and screen production remains blocked until the token validation passes and the Figma system can be inspected.
+
+Use the system-stage JSON evidence manifest from `${CLAUDE_PLUGIN_ROOT}/docs/workflow-v2.md`. Start with representative components; expand them as the approved concept develops.

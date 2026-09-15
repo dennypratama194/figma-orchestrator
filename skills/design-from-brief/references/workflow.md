@@ -10,11 +10,13 @@ Use `.figma-orchestrator/artifacts/` in the active client project. Do not store 
 | content | `content-designer` | `content.md` | structure |
 | direction | `taste-curator`, then `visual-director` | `taste.md` and `direction.md` | direction |
 | system | `design-system-architect`, then `figma-builder` | `design-system.md`, `tokens.json`, and Figma node links | none |
-| concept | `figma-builder`, then `taste-curator` and `design-critic` | `concept.md` with Figma node links and critique | none |
+| concept | `figma-builder`, then `taste-curator` and `design-critic` | `concept.md` with Figma node links and critique | concept |
 | desktop | `figma-builder`, then `design-critic` | `desktop.md` with frame inventory | desktop |
 | responsive | `responsive-reviewer`, then `figma-builder` | `responsive.md` | none |
 | qa | `handoff-auditor` | `qa.md` | final |
 | handoff | orchestrator | `handoff.md` | none |
+
+Read `${CLAUDE_PLUGIN_ROOT}/docs/workflow-v2.md` for the required evidence manifests and CLI decision arguments.
 
 ## Gate rules
 
@@ -25,12 +27,9 @@ Use `.figma-orchestrator/artifacts/` in the active client project. Do not store 
 
 Only record approval after an explicit user statement. A request to revise is rejection with the user's reason. Discussion, silence, or positive sentiment without a clear decision is not approval.
 
-Record decisions with:
+Run `review --gate NAME`, present the current fingerprint and actual artifacts, then record the explicit decision with `--fingerprint`, `--statement`, and `--source`. See workflow v2 for exact commands. A supplied reviewer name alone is never evidence of approval.
 
-```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/orchestrator.mjs" approve --gate <gate> --by "<human>"
-node "${CLAUDE_PLUGIN_ROOT}/scripts/orchestrator.mjs" reject --gate <gate> --by "<human>" --reason "<reason>"
-```
+- `concept`: approve an actual rendered Figma concept before full desktop expansion.
 
 After rejection, revise the upstream artifact, preserve a concise decision log, rerun the relevant independent review, and request the gate again.
 
@@ -48,4 +47,4 @@ Use existing project conventions when present. Otherwise create:
 
 Archive superseded concepts instead of deleting them unless the user explicitly requests deletion.
 
-The `system` stage must be complete before concept production. Foundations and components may evolve after real screen use exposes a missing variant, but screen-level values may not silently bypass tokens or detach from reusable components.
+Build minimum foundations and representative components first; expand after concept approval. The `system` stage must be complete before concept production. Foundations and components may evolve after real screen use exposes a missing variant, but screen-level values may not silently bypass tokens or detach from reusable components.

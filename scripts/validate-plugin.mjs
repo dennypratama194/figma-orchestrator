@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from "node:fs";
+import { parseDocument } from "yaml";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -19,11 +20,10 @@ function parseFrontmatter(file) {
   if (!content.startsWith("---\n")) return null;
   const end = content.indexOf("\n---\n", 4);
   if (end === -1) return null;
-  const lines = content.slice(4, end).split("\n");
-  return Object.fromEntries(lines.filter((line) => /^[a-zA-Z][\w-]*:\s*.+$/.test(line)).map((line) => {
-    const separator = line.indexOf(":");
-    return [line.slice(0, separator), line.slice(separator + 1).trim()];
-  }));
+  const doc = parseDocument(content.slice(4, end), { uniqueKeys: true });
+  if (doc.errors.length) { errors.push(`Invalid YAML: ${file}: ${doc.errors[0].message}`); return null; }
+  const value = doc.toJS();
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : null;
 }
 
 const manifestFile = path.join(root, ".claude-plugin", "plugin.json");
