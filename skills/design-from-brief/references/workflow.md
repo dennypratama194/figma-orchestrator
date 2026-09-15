@@ -9,6 +9,7 @@ Use `.figma-orchestrator/artifacts/` in the active client project. Do not store 
 | ux | `ux-architect` | `ux.md` | none |
 | content | `content-designer` | `content.md` | structure |
 | direction | `taste-curator`, then `visual-director` | `taste.md` and `direction.md` | direction |
+| system | `design-system-architect`, then `figma-builder` | `design-system.md`, `tokens.json`, and Figma node links | none |
 | concept | `figma-builder`, then `taste-curator` and `design-critic` | `concept.md` with Figma node links and critique | none |
 | desktop | `figma-builder`, then `design-critic` | `desktop.md` with frame inventory | desktop |
 | responsive | `responsive-reviewer`, then `figma-builder` | `responsive.md` | none |
@@ -46,3 +47,5 @@ Use existing project conventions when present. Otherwise create:
 7. `06 Archive`
 
 Archive superseded concepts instead of deleting them unless the user explicitly requests deletion.
+
+The `system` stage must be complete before concept production. Foundations and components may evolve after real screen use exposes a missing variant, but screen-level values may not silently bypass tokens or detach from reusable components.

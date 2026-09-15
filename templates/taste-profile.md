@@ -30,6 +30,7 @@ Summarize the brief, audience, offer, content, brand assets, product reality, an
 - Shape and material language:
 - Motion character:
 - Signature moment:
+- Gradient/shader admission: none by default; document evidence if admitted
 
 ## Anti-direction
 

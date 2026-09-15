@@ -17,10 +17,12 @@ For each finding include severity, Figma page/frame/node, evidence, impact, and 
 - Required pages and states
 - Responsive behavior
 - Components and variables
+- Even 2/4/8 token compliance
 - Content completeness
 - Accessibility
 - Interaction and prototype notes
 - Implementation annotations
+- Shader resource, fallback, and runtime handoff when applicable
 
 ## Residual risks
 

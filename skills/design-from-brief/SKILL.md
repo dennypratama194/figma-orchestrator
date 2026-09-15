@@ -20,6 +20,7 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/orchestrator.mjs" init --name "<project name
 ```
 
 4. Never reinitialize or overwrite an existing workflow. Resume from `status`.
+5. After direction approval, use `build-design-system` and complete the native Figma foundations and components before creating full concepts or screens.
 
 ## Coordination
 
@@ -32,6 +33,6 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/orchestrator.mjs" init --name "<project name
 
 ## Completion
 
-Completion means all required frames exist as native editable Figma content, responsive behavior and important states are covered, QA blockers are resolved or explicitly accepted, final approval is recorded, and the handoff artifact links decisions to Figma locations.
+Completion means the design system, variables, components, variants, and all required frames exist as native editable Figma content; responsive behavior and important states are covered; QA blockers are resolved or explicitly accepted; final approval is recorded; and the handoff artifact links decisions to Figma locations. If a shader is used, completion also requires its source/version record, static fallback, and implementation notes.
 
 Do not call a concept, screenshot, HTML prototype, or partial homepage a completed Figma project.

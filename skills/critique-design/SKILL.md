@@ -15,12 +15,15 @@ Evaluate:
 - composition, rhythm, density, and typography;
 - credible content and imagery;
 - component and variable discipline;
+- compliance with the approved even 2/4/8 spatial system;
 - accessibility and interaction states;
 - responsive feasibility;
 - implementation cost versus visible value;
 - signs of generic template or AI-generated design.
 
 Compare the work against the anti-slop signals as diagnostics, not a mechanical ban list. Verify that current influences were filtered through the brief and that unrelated brands would not receive substantially the same design with different colors.
+
+If a shader or gradient is present, require its approved conceptual role, bounded controls, readable states, static fallback, and justified implementation value. Generic decorative gradients or glow are blockers.
 
 For every finding provide severity, precise location, evidence, consequence, and a concrete correction. Separate blockers from preferences. Do not redesign by personal taste or approve your own prior work.
 

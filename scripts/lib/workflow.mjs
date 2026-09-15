@@ -7,6 +7,7 @@ export const STAGES = [
   "ux",
   "content",
   "direction",
+  "system",
   "concept",
   "desktop",
   "responsive",
@@ -16,7 +17,7 @@ export const STAGES = [
 
 export const GATES = {
   structure: { after: "content", unlocks: "direction" },
-  direction: { after: "direction", unlocks: "concept" },
+  direction: { after: "direction", unlocks: "system" },
   desktop: { after: "desktop", unlocks: "responsive" },
   final: { after: "qa", unlocks: "handoff" }
 };

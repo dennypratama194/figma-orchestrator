@@ -2,7 +2,7 @@
 
 A private Claude Code plugin that turns a raw website or product brief into an approved, responsive, implementation-ready native Figma design.
 
-It coordinates strategy, UX architecture, content, project-specific taste, visual direction, Figma production, independent critique, responsive design, and handoff QA. The workflow is intentionally gated: Claude can work autonomously between gates, but it cannot approve its own creative direction or final design.
+It coordinates strategy, UX architecture, content, project-specific taste, visual direction, a native Figma design system, Figma production, independent critique, responsive design, optional purposeful shaders, and handoff QA. The workflow is intentionally gated: Claude can work autonomously between gates, but it cannot approve its own creative direction or final design.
 
 ## Requirements
 
@@ -46,11 +46,14 @@ You can also pass the brief and target directly:
 3. Build the sitemap, flows, page anatomy, and conversion hierarchy.
 4. Draft content matched to the approved structure.
 5. Build a project-specific taste profile, research and filter relevant current influences, then define visual direction and design-system foundations.
-6. Create focused concepts in native Figma.
-7. Critique and revise the selected concept.
-8. Build full desktop screens.
-9. Design responsive variants and states.
-10. Audit accessibility, consistency, completeness, and handoff quality.
+6. Create native Figma variables, styles, components, variants, and states using the even 2/4/8-based token system.
+7. Create focused concepts in native Figma.
+8. Critique and revise the selected concept.
+9. Build full desktop screens from component instances.
+10. Design responsive variants and states.
+11. Audit accessibility, consistency, completeness, and handoff quality.
+
+Spatial values use an even 2/4/8-derived scale. One-pixel hairline strokes are the only default odd-value exception. Decorative gradients and generic glow effects are prohibited. Figma shaders are supported only when the approved direction gives them a specific role, fallback, and implementation plan.
 
 Four gates require explicit human approval: structure, direction, desktop, and final.
 

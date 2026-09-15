@@ -15,6 +15,7 @@ These are diagnostic signals, not universal bans. A flagged choice may remain on
 ## Surface signals
 
 - decorative blue or purple glow used to manufacture perceived technology;
+- generic aurora, mesh-gradient, blurry-orb, liquid-chrome, or animated-noise shaders without a concept-specific role;
 - glassmorphism, gradients, pills, shadows, or rounded rectangles applied everywhere;
 - tiny uppercase eyebrow labels above every heading;
 - generic geometric sans typography with no intentional voice or hierarchy;
@@ -39,3 +40,5 @@ These are diagnostic signals, not universal bans. A flagged choice may remain on
 4. Create one content-led signature moment.
 5. Strengthen typography and imagery art direction.
 6. Verify that the system remains coherent, responsive, accessible, and buildable.
+
+A shader does not excuse weak composition. Remove it temporarily: if the hierarchy collapses or the design becomes interchangeable, fix the underlying direction.

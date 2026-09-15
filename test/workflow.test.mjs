@@ -49,6 +49,21 @@ test("direction remains locked until structure approval", () => {
   assert.equal(state.stages.direction.status, "complete");
 });
 
+test("design system is required before concept work", () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "figo-"));
+  const state = createInitialState({ name: "Test", workspace: directory });
+  for (const stage of ["brief", "strategy", "ux", "content"]) {
+    completeStage(state, stage, artifact(directory, `${stage}.md`));
+  }
+  decideGate(state, "structure", "approved", "Denny");
+  completeStage(state, "direction", artifact(directory, "direction.md"));
+  decideGate(state, "direction", "approved", "Denny");
+  assert.throws(() => completeStage(state, "concept", artifact(directory, "concept.md")), /prior stage system/);
+  completeStage(state, "system", artifact(directory, "design-system.md"));
+  completeStage(state, "concept", artifact(directory, "concept.md"));
+  assert.equal(state.stages.concept.status, "complete");
+});
+
 test("rejection requires a reason and does not unlock work", () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "figo-"));
   const state = createInitialState({ name: "Test", workspace: directory });

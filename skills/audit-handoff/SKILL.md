@@ -11,6 +11,10 @@ Produce `.figma-orchestrator/artifacts/qa.md` using `${CLAUDE_PLUGIN_ROOT}/templ
 
 A blocker includes missing required frames, broken hierarchy, inaccessible contrast or interaction, unresolved placeholder content presented as final, detached or inconsistent components, absent critical states, ambiguous responsive behavior, or a mismatch with an approved upstream decision.
 
+Missing native foundations/components, odd unapproved spatial values, raw recurring values that bypass tokens, unexplained detached instances, and incomplete component states are also blockers.
+
 Also flag production drift that erased the approved brand distinction or signature idea, and trend treatments added without evidence in the taste profile.
+
+For shaders, verify the official resource identity and version, ownership, kind, controls, actual Figma usage, static fallback, readable states, and runtime-based implementation note. A raster or CSS-gradient approximation is not an acceptable shader handoff.
 
 Do not pass the audit with unresolved blockers. Minor findings may pass with notes only when they do not create implementation ambiguity or user harm.

@@ -1,0 +1,42 @@
+{
+  "spacing": {
+    "0": 0,
+    "2": 2,
+    "4": 4,
+    "8": 8,
+    "12": 12,
+    "16": 16,
+    "24": 24,
+    "32": 32,
+    "40": 40,
+    "48": 48,
+    "64": 64,
+    "80": 80,
+    "96": 96,
+    "128": 128
+  },
+  "radii": {
+    "none": 0,
+    "small": 4,
+    "medium": 8,
+    "large": 16,
+    "pill": 9998
+  },
+  "sizes": {
+    "icon-small": 16,
+    "icon-medium": 24,
+    "control-small": 32,
+    "control-medium": 40,
+    "control-large": 48
+  },
+  "typography": {
+    "body-size": 16,
+    "body-line-height": 24,
+    "label-size": 14,
+    "label-line-height": 20
+  },
+  "strokes": {
+    "hairline": 1,
+    "strong": 2
+  }
+}

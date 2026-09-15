@@ -1,7 +1,7 @@
 {
   "name": "figma-orchestrator",
   "description": "Turn product and website briefs into structured, reviewed, responsive native Figma designs through gated specialist workflows.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "Denny Pratama"
   },

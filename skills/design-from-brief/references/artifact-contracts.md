@@ -26,6 +26,10 @@ First produce `taste.md` using `${CLAUDE_PLUGIN_ROOT}/templates/taste-profile.md
 
 List the file URL, page and frame names, node links or identifiers, dimensions, purpose, component coverage, unresolved issues, and what changed after critique. A claim that content exists must be verifiable in Figma.
 
+## Design system
+
+Include Figma links for foundations, variable collections, styles, components, variants, and state coverage. Attach `tokens.json`, its validator result, the 2/4/8 spatial-scale decision, component inventory, exceptions, and any shader resource IDs, kinds, versions, controls, fallbacks, and implementation notes.
+
 ## QA
 
 Use `${CLAUDE_PLUGIN_ROOT}/templates/qa-report.md`. Findings need severity, precise location, evidence, impact, and correction. A passing verdict cannot contain unresolved blockers.

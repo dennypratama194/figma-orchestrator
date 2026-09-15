@@ -1,13 +1,13 @@
 {
   "name": "figma-orchestrator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "A gated brief-to-Figma design orchestrator for Claude Code.",
   "scripts": {
     "test": "node --test",
     "validate": "node scripts/validate-plugin.mjs",
-    "check": "npm run validate && npm test",
+    "check": "npm run validate && node scripts/validate-tokens.mjs templates/design-tokens.json && npm test",
     "orchestrator": "node scripts/orchestrator.mjs"
   },
   "engines": {

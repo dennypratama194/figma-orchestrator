@@ -33,6 +33,8 @@ Use hierarchy through scale, contrast, position, pacing, cropping, alignment, an
 
 Specify functional roles for typography, color, imagery, shape, line, texture, iconography, and motion. Every expressive device needs a relationship to brand character or user comprehension.
 
+Default to solid semantic color roles. Admit a gradient or shader only when it performs a project-specific communication or brand function that survives the no-effect fallback test. Glow and color interpolation are not concepts by themselves.
+
 Typography is structural. Select type for voice, legibility, language coverage, available weights, realistic loading, and hierarchy. Avoid using fashionable typefaces as a substitute for composition.
 
 Imagery needs an art direction: subject, framing, crop, lighting, color treatment, repetition rules, and relationship to text. Do not fill image boxes with generic stock or synthetic-looking scenes that weaken credibility.
