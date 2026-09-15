@@ -1,0 +1,15 @@
+{
+  "name": "Northstar Analytics",
+  "projectType": "marketing-website",
+  "brief": "Create a high-trust landing page for an analytics product used by independent retail teams. The primary conversion is booking a demo.",
+  "figmaUrl": null,
+  "brandAssets": [],
+  "references": [],
+  "scope": {
+    "screens": ["Home"],
+    "breakpoints": [1440, 390],
+    "prototype": false
+  },
+  "constraints": ["Avoid generic dashboard-card mosaics", "Use credible product evidence"],
+  "approvalOwner": "Denny"
+}

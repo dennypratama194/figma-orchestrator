@@ -1,0 +1,12 @@
+{
+  "name": "figma-orchestrator",
+  "description": "Turn product and website briefs into structured, reviewed, responsive native Figma designs through gated specialist workflows.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Denny Pratama"
+  },
+  "homepage": "https://github.com/dennypratama194/figma-orchestrator",
+  "repository": "https://github.com/dennypratama194/figma-orchestrator",
+  "license": "UNLICENSED",
+  "keywords": ["figma", "design", "orchestrator", "ui-ux", "claude-code"]
+}

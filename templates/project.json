@@ -1,0 +1,15 @@
+{
+  "name": "Client website",
+  "projectType": "marketing-website",
+  "brief": "./brief.md",
+  "figmaUrl": null,
+  "brandAssets": ["./assets/logo.svg"],
+  "references": [],
+  "scope": {
+    "screens": ["Home", "About", "Contact"],
+    "breakpoints": [1440, 768, 390],
+    "prototype": false
+  },
+  "constraints": [],
+  "approvalOwner": "Denny"
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://digitalrevo.id/schemas/figma-orchestrator/state.schema.json",
+  "title": "Figma Orchestrator State",
+  "type": "object",
+  "required": ["version", "project", "currentStage", "status", "stages", "gates", "history"],
+  "properties": {
+    "version": { "const": 1 },
+    "project": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "figmaUrl": { "type": ["string", "null"] }
+      }
+    },
+    "currentStage": { "type": "string" },
+    "status": { "enum": ["active", "blocked", "complete"] },
+    "stages": { "type": "object" },
+    "gates": { "type": "object" },
+    "history": { "type": "array" }
+  }
+}
